@@ -1,0 +1,5 @@
+1) you have to create Podfile
+
+2) cd /Users/eclipse/WorkspaceforXcode/[project name]&& pod update
+
+3) open [project name].xcworkspace
