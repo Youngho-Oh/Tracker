@@ -18,8 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Override point for customization after application launch.
 
         //Initialize sign-in
-        GIDSignIn.sharedInstance()?.clientID = "204238408245-vo45lptis8pu7321ft79770bs8jm3hjs.apps.googleusercontent.com"
-        GIDSignIn.sharedInstance()?.delegate = self
+        GIDSignIn.sharedInstance()?.clientID = "gcloud"
+//        GIDSignIn.sharedInstance().clientID = "204238408245-vo45lptis8pu7321ft79770bs8jm3hjs.apps.googleusercontent.com"
+//        GIDSignIn.sharedInstance().clientID = "com.googleusercontent.apps.204238408245-vo45lptis8pu7321ft79770bs8jm3hjs"
+        GIDSignIn.sharedInstance().delegate = self
         
         return true
     }
@@ -41,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     // [START openurl]
     func application(_ application: UIApplication,
                       open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        dump("************************************")
+//        dump(GIDSignIn.sharedInstance().handle(url))
         return GIDSignIn.sharedInstance().handle(url)
     }
     // [END openurl]
@@ -51,12 +55,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
       return GIDSignIn.sharedInstance().handle(url)
     }
     // [END openurl_new]
+    
     // [START signin_handler]
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
       if let error = error {
         if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-          print("The user has not signed in before or they have since signed out.")
+            print("The user has not signed in before or they have since signed out.")
+            dump( (error as NSError).userInfo )
+            dump( (error as NSError).domain )
+            dump( (error as NSError).code )
         } else {
           print("\(error.localizedDescription)")
         }
@@ -80,8 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         userInfo: ["statusText": "Signed in user:\n\(fullName!)"])
       // [END_EXCLUDE]
     }
-    // [END signin_handler]
-    // [START disconnect_handler]
+    
+   // [START disconnect_handler]
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
       // Perform any operations when the user disconnects from app here.
@@ -90,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         name: Notification.Name(rawValue: "ToggleAuthUINotification"),
         object: nil,
         userInfo: ["statusText": "User has disconnected."])
-      // [END_EXCLUDE]
+//       [END_EXCLUDE]
     }
     // [END disconnect_handler]
 }

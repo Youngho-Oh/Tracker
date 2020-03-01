@@ -16,7 +16,7 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
     
     // [START viewcontroller_vars]
     @IBOutlet weak var signInButton: GIDSignInButton!
-    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var signOUtButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var statusText: UILabel!
     // [END viewcontroller_vars]
@@ -42,7 +42,7 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
         
         statusText.text = "Initialized Swift app..."
         toggleAuthUI()
-        // [END_EXCLUDE]
+//         [END_EXCLUDE]
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
@@ -99,7 +99,8 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
             dump("else")
         }
     }
-    
+
+
     // [START signout_tapped]
     @IBAction func didTapSignOut(_ sender: AnyObject) {
         GIDSignIn.sharedInstance()?.signOut()
@@ -122,12 +123,14 @@ class ViewController: UIViewController , CLLocationManagerDelegate {
     func toggleAuthUI(){
         if let _ = GIDSignIn.sharedInstance()?.currentUser?.authentication {
             //Signed in
+            dump("sign in")
             signInButton.isHidden = true
-            signOutButton.isHidden = false
+            signOUtButton.isHidden = false
             disconnectButton.isHidden = false
         } else {
+            dump("sign out")
             signInButton.isHidden = false
-            signOutButton.isHidden = true
+            signOUtButton.isHidden = true
             disconnectButton.isHidden = true
             statusText.text = "Google Sign in/niOS Demo"
         }
